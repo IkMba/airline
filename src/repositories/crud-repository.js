@@ -1,4 +1,6 @@
 const { Logger } = require("winston");
+const { AppError } = require("../utils");
+const { StatusCodes } = require("http-status-codes");
 
 class CrudRepository {
   constructor(model) {
@@ -13,11 +15,17 @@ class CrudRepository {
   async destroy(data) {
 
       const response = await this.model.destroy({ where: { id: data } });
+      if (!response){
+        throw new AppError('resource not found',StatusCodes.NOT_FOUND)
+      }
       return response;
  
   }
   async get(data) {
       const response = await this.model.findByPk(data);
+      if (!response){
+        throw new AppError('resource not found',StatusCodes.NOT_FOUND)
+      }
       return response;
 
   }
