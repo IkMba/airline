@@ -1,0 +1,34 @@
+const { StatusCodes } = require("http-status-codes");
+const { FlightService } = require("../services");
+const { SuccessResponse, ErrorResponse } = require("../utils/common");
+
+async function createFlight(req, res) {
+  try {
+    const airport = await FlightService.createFlight({
+      flightNumber: req.body.flightNumber,
+      airplaneId: req.body.airplaneId,
+      arrivalTime: req.body.arrivalTime,
+      departureTime: req.body.departureTime,
+      price: req.body.price,
+      boardingGate: req.body.boardingGate,
+      departureAirportId: req.body.departureAirportId,
+      arrivalAirportId: req.body.arrivalAirportId,
+      totalSeats: req.body.totalSeats,
+
+    });
+    SuccessResponse.data = airport;
+    return res.status(StatusCodes.CREATED).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.error = error;
+    ErrorResponse.message = "Something went wrong while creating flight";
+
+    return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
+  }
+}
+
+
+
+module.exports = {
+  createFlight,
+
+};
