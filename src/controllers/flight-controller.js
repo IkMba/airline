@@ -36,7 +36,7 @@ try {
 
 } catch(error){
     ErrorResponse.error = error;
-    ErrorResponse.message = "Something went wrong while creating flight";
+    ErrorResponse.message = "Something went wrong while fetching flights";
 
     return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
 }
