@@ -14,7 +14,6 @@ async function createFlight(req, res) {
       departureAirportId: req.body.departureAirportId,
       arrivalAirportId: req.body.arrivalAirportId,
       totalSeats: req.body.totalSeats,
-
     });
     SuccessResponse.data = airport;
     return res.status(StatusCodes.CREATED).json(SuccessResponse);
@@ -26,23 +25,39 @@ async function createFlight(req, res) {
   }
 }
 
-async function getAllFlights(req,res)  {
-try {
-
-    const flights = await FlightService.getAllFlights(req.query)
-    SuccessResponse.data = flights
+async function getAllFlights(req, res) {
+  try {
+    const flights = await FlightService.getAllFlights(req.query);
+    SuccessResponse.data = flights;
 
     return res.status(StatusCodes.CREATED).json(SuccessResponse);
-
-} catch(error){
+  } catch (error) {
     ErrorResponse.error = error;
     ErrorResponse.message = "Something went wrong while fetching flights";
 
     return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
+  }
 }
+
+async function getFlight(req, res) {
+  try {
+    const flight = await FlightService.getFlight(req.params.id);
+    console.log(flight);
+    console.log("hhh");
+
+    console.log(req.params.id);
+    SuccessResponse.data = flight;
+    return res.status(StatusCodes.OK).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.error = error;
+    ErrorResponse.message = "Something went wrong while fetching the flight";
+
+    return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
+  }
 }
 
 module.exports = {
   createFlight,
-getAllFlights
+  getAllFlights,
+  getFlight,
 };

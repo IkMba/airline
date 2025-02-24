@@ -1,6 +1,6 @@
 const express = require("express");
-const {  AirportController, FlightController } = require("../../controllers");
-const {  AirportMiddleWares, FlightMiddleWares } = require("../../middlewares");
+const {  FlightController } = require("../../controllers");
+const {  FlightMiddleWares } = require("../../middlewares");
 
 const router = express.Router();
 
@@ -12,6 +12,10 @@ router.post(
 router.get(
   "/",
   FlightController.getAllFlights
+);
+router.get(
+  "/:id",
+  FlightController.getFlight
 );
 
 
